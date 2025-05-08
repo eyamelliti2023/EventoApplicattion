@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Réclamations{% endblock %}
+
+{% block body %}
+    {% include 'participant/menu.html.twig' %}
+
+    <div class="container my-5">
+
+        <!-- Title Section -->
+        <h1 class="my-4 text-center">Réclamations de {{ user.nom }} {{ user.prenom }}</h1>
+
+        <div class="d-flex justify-content-between mb-3">
+            <!-- Button to submit a new reclamation -->
+            <a href="{{ path('app_reclamation_new') }}" class="btn btn-success btn-lg">Soumettre une réclamation</a>
+        </div>
+
+        <!-- Check if there are any reclamations -->
+        {% if reclamations is empty %}
+            <p class="text-center">Aucune réclamation trouvée.</p>
+        {% else %}
+            <!-- Reclamations Table -->
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Message</th>
+                            <th>Statut</th>
+                            <th>Réponse</th>
+                            <th>Image</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reclamation in reclamations %}
+                            <tr>
+                                <td>{{ reclamation.id }}</td>
+                                <td>{{ reclamation.message }}</td>
+                                <td>
+                                    {% if reclamation.status == 'REPLIED' %}
+                                        <span class="badge bg-success">Répondu</span>
+                                    {% elseif reclamation.status == 'DELIVERED' %}
+                                        <span class="badge bg-info">Clôturé</span>
+                                    {% else %}
+                                        <span class="badge bg-warning text-dark">En attente</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ reclamation.response ? reclamation.response : 'Pas encore de réponse' }}</td>
+                                <td>
+                                    {% if reclamation.imageUrl %}
+                                        <img src="{{ reclamation.imageUrl }}" alt="Image" style="max-width: 100px; border-radius: 5px;">
+                                    {% else %}
+                                        <span class="text-muted">Aucune</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <!-- Edit Button -->
+                                    <a href="{{ path('app_rec_edit', {'id': reclamation.id}) }}" class="btn btn-warning btn-sm">
+                                        <i class="fas fa-edit"></i> Modifier
+                                    </a>
+
+                                    <!-- Delete Form -->
+                                    <form action="{{ path('rec_delete', {'id': reclamation.id}) }}" method="post" style="display:inline-block;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette réclamation ?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reclamation.id) }}">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash-alt"></i> Supprimer
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

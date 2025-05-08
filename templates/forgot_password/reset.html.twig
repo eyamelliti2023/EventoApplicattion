@@ -1,0 +1,79 @@
+{# templates/reset_password/reset.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Réinitialisation du mot de passe{% endblock %}
+
+{% block body %}
+<br><br><br>
+
+    <div class="reset-password-container">
+
+<h1>Réinitialiser votre mot de passe</h1>
+
+<p>Entrez votre nouveau mot de passe.</p>
+
+{{ form_start(form) }}
+            <div class="form-group">
+
+    {{ form_row(form.password) }}</div>
+                <div class="form-group">
+
+    {{ form_row(form.submit) }}
+            </div>
+{{ form_end(form) }}
+    </div>
+<br><br><br>
+    <style>
+        .reset-password-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .reset-password-container h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .reset-password-container p {
+            text-align: center;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-group input[type="submit"] {
+            background-color:rgb(72, 134, 70);
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+
+        .form-group input[type="submit"]:hover {
+            background-color: rgb(72, 134, 70);
+        }
+        .form-group button {
+            margin-left: 70px;
+            background-color: rgb(72, 134, 70);
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+    </style>
+{% endblock %}
+

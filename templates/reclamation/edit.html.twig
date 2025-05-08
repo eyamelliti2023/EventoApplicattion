@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier Réclamation{% endblock %}
+
+{% block body %}
+    {% include 'participant/menu.html.twig' %}
+
+    <div class="container my-5">
+        <h1 class="my-4 text-center text-primary">Modifier la Réclamation</h1>
+
+        {{ form_start(form, {
+            'attr': {
+                'enctype': 'multipart/form-data',
+                'novalidate': 'novalidate',
+                'class': 'needs-validation'
+            }
+        }) }}
+
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+
+                        <!-- Type -->
+                        <div class="mb-3">
+                            {{ form_label(form.type, 'Type de réclamation', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+                            {{ form_widget(form.type, {'attr': {'class': 'form-select'}}) }}
+                            <div class="text-danger small">{{ form_errors(form.type) }}</div>
+                        </div>
+
+                        <!-- Message -->
+                        <div class="mb-3">
+                            {{ form_label(form.message, 'Détail du message', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+                            {{ form_widget(form.message, {
+                                'attr': {
+                                    'class': 'form-control',
+                                    'rows': 5,
+                                    'placeholder': 'Décrivez votre problème en détail...'
+                                }
+                            }) }}
+                            <div class="text-danger small">{{ form_errors(form.message) }}</div>
+                        </div>
+
+                        <!-- Statut -->
+                        {% if form.status is defined %}
+                            <div class="mb-3">
+                                {{ form_label(form.status, 'Statut', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+                                {{ form_widget(form.status, {'attr': {'class': 'form-select'}}) }}
+                                <div class="text-danger small">{{ form_errors(form.status) }}</div>
+                            </div>
+                        {% endif %}
+
+                        <!-- Réponse -->
+                        {% if form.response is defined %}
+                            <div class="mb-3">
+                                {{ form_label(form.response, 'Réponse', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+                                {{ form_widget(form.response, {'attr': {'class': 'form-control', 'rows': 4, 'placeholder': 'Ajoutez une réponse...'}}) }}
+                                <div class="text-danger small">{{ form_errors(form.response) }}</div>
+                            </div>
+                        {% endif %}
+
+                        <!-- Image -->
+                        {% if form.imageFile is defined %}
+                            <div class="mb-3">
+                                {{ form_label(form.imageFile, 'Image justificative', {'label_attr': {'class': 'form-label fw-semibold'}}) }}
+                                {{ form_widget(form.imageFile, {'attr': {'class': 'form-control', 'onchange': 'previewImage(event)'}}) }}
+                                <div class="text-danger small">{{ form_errors(form.imageFile) }}</div>
+
+                                <div class="mt-3 text-center">
+                                    <img id="imagePreview" src="{{ reclamation.imageUrl ?: '#' }}" alt="Aperçu de l'image"
+                                         style="max-width: 200px; border-radius: 8px; {{ reclamation.imageUrl ? '' : 'display: none;' }}"
+                                         class="img-thumbnail" />
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <!-- Submit -->
+                        <div class="text-center mt-4">
+                            {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary px-4 py-2'}}) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+
+    <script>
+        function previewImage(event) {
+            const preview = document.getElementById('imagePreview');
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+{% endblock %}

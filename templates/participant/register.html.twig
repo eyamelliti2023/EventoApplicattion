@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+    {% include 'home/menu.html.twig' %}
+
+    <div class="container my-5">
+        <h1 class="my-4 text-center">Inscription</h1>
+
+        {{ form_start(registrationForm, {
+            'attr': {
+                'novalidate': 'novalidate',
+                'data-turbo': 'false'
+            }
+        }) }}
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card p-4 shadow-sm">
+
+                    {% for field in [registrationForm.nom, registrationForm.prenom, registrationForm.numeroTel, registrationForm.email, registrationForm.plainPassword] %}
+                        <div class="form-group mb-3">
+                            {{ form_label(field, null, {'label_attr': {'class': 'form-label'}}) }}
+
+                            {% set fieldClass = 'form-control' %}
+                            {% if field.vars.errors|length > 0 %}
+                                {% set fieldClass = fieldClass ~ ' is-invalid' %}
+                            {% endif %}
+
+                            {{ form_widget(field, {'attr': {'class': fieldClass}}) }}
+
+                            {% if field.vars.errors|length > 0 %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form_errors(field) }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-primary btn-lg mt-3">S'inscrire</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        {{ form_end(registrationForm) }}
+    </div>
+{% endblock %}

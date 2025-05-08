@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vérification du Code OTP{% endblock %}
+
+{% block body %}
+<br><br><br>
+
+<div class="otp-verification-container">
+    <h1>🔐 Vérification du code OTP</h1>
+    <p class="subtitle">Veuillez entrer le code envoyé à votre adresse email.</p>
+
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger text-center">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success text-center">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <form method="POST" class="otp-form" novalidate>
+        <div class="form-group">
+            <input 
+                type="text" 
+                name="otp" 
+                class="form-control otp-input" 
+                placeholder="Entrez votre code OTP" 
+                required
+                minlength="6"
+                maxlength="6"
+            >
+        </div>
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary verify-btn">Vérifier</button>
+        </div>
+    </form>
+</div>
+
+<br><br><br>
+
+<style>
+    .otp-verification-container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 30px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .otp-verification-container h1 {
+        font-size: 26px;
+        margin-bottom: 10px;
+        color: #2a3fcf;
+    }
+
+    .subtitle {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 20px;
+    }
+
+    .otp-form {
+        margin-top: 20px;
+    }
+
+    .otp-input {
+        width: 100%;
+        padding: 12px;
+        font-size: 18px;
+        border: 2px solid #dcdcdc;
+        border-radius: 8px;
+        text-align: center;
+        transition: border-color 0.3s;
+    }
+
+    .otp-input:focus {
+        border-color: #2a3fcf;
+        outline: none;
+    }
+
+    .verify-btn {
+        margin-top: 20px;
+        padding: 12px 30px;
+        font-size: 18px;
+        background-color: #2a3fcf;
+        color: #fff;
+        border: none;
+        border-radius: 25px;
+        transition: background-color 0.3s;
+    }
+
+    .verify-btn:hover {
+        background-color: #1f2b8f;
+    }
+
+    .alert {
+        margin-top: 10px;
+        padding: 12px;
+        border-radius: 8px;
+    }
+</style>
+
+{% endblock %}

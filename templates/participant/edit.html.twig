@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% include 'participant/menu.html.twig' %}
+
+    <div class="container my-5">
+        <h1 class="my-4 text-center">Modifier votre profil</h1>
+
+        {{ form_start(editForm, {'attr': {'data-turbo': 'false', 'novalidate': 'novalidate'}}) }}
+        
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card p-4 shadow-sm">
+                    <!-- Nom Field -->
+                    <div class="form-group mb-3">
+                        {{ form_label(editForm.nom, 'Nom', {'attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(editForm.nom, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre nom'}}) }}
+                        <div class="text-danger">
+                            {{ form_errors(editForm.nom) }}
+                        </div>
+                    </div>
+
+                    <!-- Prénom Field -->
+                    <div class="form-group mb-3">
+                        {{ form_label(editForm.prenom, 'Prénom', {'attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(editForm.prenom, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre prénom'}}) }}
+                        <div class="text-danger">
+                            {{ form_errors(editForm.prenom) }}
+                        </div>
+                    </div>
+
+                    <!-- Téléphone Field -->
+                    <!-- Téléphone Field (corrigé) -->
+                    <div class="form-group mb-3">
+                        {{ form_label(editForm.numeroTel, 'Téléphone', {'attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(editForm.numeroTel, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre numéro de téléphone'}}) }}
+                        <div class="text-danger">
+                            {{ form_errors(editForm.numeroTel) }}
+                        </div>
+                    </div>
+
+
+                    <!-- Email Field -->
+                    <div class="form-group mb-3">
+                        {{ form_label(editForm.email, 'Adresse e-mail', {'attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(editForm.email, {'attr': {'class': 'form-control', 'placeholder': 'Entrez votre adresse e-mail'}}) }}
+                        <div class="text-danger">
+                            {{ form_errors(editForm.email) }}
+                        </div>
+                    </div>
+
+                    <!-- Password Field -->
+                    <!-- Password Field (corrigé) -->
+                    <div class="form-group mb-3">
+                        {{ form_label(editForm.plainPassword, 'Mot de passe', {'attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(editForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
+                        <div class="text-danger">
+                            {{ form_errors(editForm.plainPassword) }}
+                        </div>
+                    </div>
+
+
+                    <!-- Submit Button -->
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-success btn-lg mt-3">Enregistrer les modifications</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{ form_end(editForm) }}
+    </div>
+
+{% endblock %}

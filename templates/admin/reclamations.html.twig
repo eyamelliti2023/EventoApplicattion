@@ -1,0 +1,83 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Liste des Réclamations{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Liste des Réclamations</h1>
+
+    {% if reclamations is empty %}
+        <div class="alert alert-info text-center">
+            Aucune réclamation trouvée.
+        </div>
+    {% else %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#ID</th>
+                        <th>Type</th>
+                        <th>Message</th>
+                        <th>Image</th>
+                        <th>Statut</th>
+                        <th>Réponse</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reclamation in reclamations %}
+                        <tr>
+                            <td>{{ reclamation.id }}</td>
+                            <td>{{ reclamation.type|replace({
+                                'BAD_EVENT': 'Événement problématique',
+                                'REFUND_REQUEST': 'Demande de remboursement',
+                                'TECHNICAL_ISSUE': 'Problème technique',
+                                'OTHER': 'Autre'
+                            }) }}</td>
+                            <td>{{ reclamation.message|length > 80 ? reclamation.message|slice(0, 80) ~ '...' : reclamation.message }}</td>
+                            <td>
+                                {% if reclamation.imageUrl %}
+                                    <a href="{{ reclamation.imageUrl }}" target="_blank">
+                                        <img src="{{ reclamation.imageUrl }}" alt="Image" style="max-width: 80px; max-height: 80px;" class="img-thumbnail">
+                                    </a>
+                                {% else %}
+                                    <span class="text-muted">Aucune</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if reclamation.status == 'PENDING' %}
+                                    <span class="badge bg-warning text-dark">En attente</span>
+                                {% elseif reclamation.status == 'REPLIED' %}
+                                    <span class="badge bg-info text-dark">Répondue</span>
+                                {% else %}
+                                    <span class="badge bg-success">Livrée</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if reclamation.response %}
+                                    {{ reclamation.response|length > 60 ? reclamation.response|slice(0, 60) ~ '...' : reclamation.response }}
+                                {% else %}
+                                    <span class="text-muted">Pas encore de réponse</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                {% if reclamation.status in ['PENDING', 'DELIVERED'] %}
+                                    <a href="{{ path('app_rec_reply', { id: reclamation.id }) }}" class="btn btn-sm btn-outline-primary mb-1">
+                                        Répondre
+                                    </a><br>
+                                {% endif %}
+                                <form action="{{ path('app_rec_delete', { id: reclamation.id }) }}" method="post" style="display:inline;">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reclamation.id) }}">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Supprimer cette réclamation ?');">
+                                        Supprimer
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

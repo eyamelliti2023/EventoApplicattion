@@ -1,0 +1,21 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Répondre à la Réclamation{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Répondre à la Réclamation</h1>
+
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        <div class="mb-3">
+            {{ form_label(form.response) }}
+            {{ form_widget(form.response, {'attr': {'class': 'form-control', 'rows': '5'}}) }}
+            {{ form_errors(form.response) }}
+        </div>
+
+        <div class="text-center">
+            {{ form_widget(form.save, {'attr': {'class': 'btn btn-success px-5'}}) }}
+        </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}
