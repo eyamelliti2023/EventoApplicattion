@@ -1,4 +1,4 @@
-Description du projet
+**Description du projet**
 
 EventoApplication est une application web développée avec Symfony qui propose une plateforme de gestion d'événements. Elle se divise en deux interfaces principales :
 
@@ -8,7 +8,7 @@ Côté Client : pour la consultation des événements, la réservation de place
 
 L’objectif de ce projet est de fournir une solution intuitive, sécurisée et évolutive pour organiser et réserver des événements, tout en offrant une expérience utilisateur fluide.
 
-Fonctionnalités
+**Fonctionnalités**
 
 Côté Administrateur
 
@@ -28,7 +28,7 @@ Réservation d’événements : sélection du nombre de places, confirmation pa
 
 Soumission de réclamations : formulaire simple pour signaler un problème
 
-Technologies et architecture
+**Technologies et architecture**
 
 Framework : Symfony 6
 
@@ -42,7 +42,7 @@ Cartographie : Leaflet.js pour géolocalisation des lieux d’événements
 
 Architecture : MVC (Controllers, Services, Entities, Repositories, Templates)
 
-Installation et configuration
+**Installation et configuration**
 
 Cloner le dépôt :
 
@@ -71,7 +71,7 @@ Lancer le serveur de développement :
 
 symfony server:start
 
-Contributeurs
+**Contributeurs**
 
 Eya Melliti <eya.melliti@espri.tn>
 
